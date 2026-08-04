@@ -1,0 +1,21 @@
+{
+  "name": "trunk-playground",
+  "version": "1.0.0",
+  "description": "A small TypeScript project for learning Trunk Code Quality, Flaky Tests, and Merge Queue.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:report": "vitest run --reporter=default --reporter=junit --outputFile.junit=test-results/junit.xml",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
+
