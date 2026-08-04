@@ -1,5 +1,8 @@
 # Hosted Trunk setup
 
+For the day-to-day watch, test, fix, upload, and queue workflow, use
+[REALTIME_RUNBOOK.md](REALTIME_RUNBOOK.md).
+
 The repository code is complete without a Trunk account. These one-time steps
 connect the hosted dashboard, Flaky Tests, and Merge Queue. They require an
 interactive sign-in because GitHub and Trunk must ask you to approve app
