@@ -1,0 +1,50 @@
+name: Flaky Tests Lab
+
+on:
+  # checkov:skip=CKV_GHA_7:Input controls only an opt-in test outcome, never the build source
+  workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: Make the demo test fail in this run
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-upload:
+    name: Generate and upload JUnit results
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DEMO_FLAKE_SHOULD_FAIL: ${{ inputs.simulate_failure }}
+      RUN_FLAKY_DEMO: "true"
+      TRUNK_API_TOKEN: ${{ secrets.TRUNK_API_TOKEN }}
+      TRUNK_ORG_URL_SLUG: ${{ secrets.TRUNK_ORG_URL_SLUG }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run locally when Trunk secrets are not configured
+        if: env.TRUNK_API_TOKEN == '' || env.TRUNK_ORG_URL_SLUG == ''
+        run: npm run test:report
+
+      - name: Run tests and upload results to Trunk
+        if: env.TRUNK_API_TOKEN != '' && env.TRUNK_ORG_URL_SLUG != ''
+        uses: trunk-io/analytics-uploader@v2
+        with:
+          junit-paths: test-results/junit.xml
+          org-slug: ${{ env.TRUNK_ORG_URL_SLUG }}
+          run: npm run test:report
+          token: ${{ env.TRUNK_API_TOKEN }}

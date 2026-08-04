@@ -7,7 +7,9 @@
   "scripts": {
     "test": "vitest run",
     "test:report": "vitest run --reporter=default --reporter=junit --outputFile.junit=test-results/junit.xml",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "quality": "trunk check --all --no-fix",
+    "format": "trunk fmt --all"
   },
   "devDependencies": {
     "@types/node": "^24.1.0",
@@ -18,4 +20,3 @@
     "node": ">=20"
   }
 }
-
