@@ -16,4 +16,3 @@ export function cartTotal(lines: readonly CartLine[]): number {
     return total + line.unitPrice * line.quantity;
   }, 0);
 }
-
