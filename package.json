@@ -6,9 +6,11 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
+    "test:watch": "vitest",
     "test:report": "vitest run --reporter=default --reporter=junit --outputFile.junit=test-results/junit.xml",
     "typecheck": "tsc --noEmit",
     "quality": "trunk check --all --no-fix",
+    "quality:fast": "trunk check --all --no-fix --filter=-grype",
     "format": "trunk fmt --all"
   },
   "devDependencies": {
